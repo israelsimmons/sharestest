@@ -18,6 +18,8 @@ KoreConX Take Home Test
 1. Run composer install && npm install (you need to install composer and node BTW)
 1. Ccreate a new database
 1. Create the .env file and modify DB connection (you can copy the .env.example)
+1. Run the command ./artisan jwt:secret (the api routes are secured with jwt)
+1. Run the command ./artisan key:generate (or set the APP_KEY manually in the .env file)
 1. You can set a virtualhost or use the ./artisan serve
 
 ### what to expect?
