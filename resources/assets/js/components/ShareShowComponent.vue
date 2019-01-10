@@ -81,15 +81,13 @@
                                 
                             </div>
 
-
                             <div class="form-group row">
                                 <div class="col-md-6 offset-sm-4">
                                     <button v-on:click="saveShare($event)" class="btn btn-primary"><i class="fa fa-save"></i> Save Share</button>
-                                    <button v-on:click="goBack($event)" class="btn btn-light"><i class="fa fa-clipboard-list"></i> Back to My Shares</button>
+                                    <router-link class="btn btn-light" :to="{ name: 'list'}"><i class="fa fa-clipboard-list"></i> Back to My Shares</router-link>
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
