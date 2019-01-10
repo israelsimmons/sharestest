@@ -66,6 +66,7 @@
         },
         methods: {
             getData() {
+                // getting the paginated data from the shares endpoint
                 let asd = this
                 axios.get('/api/shares?page=' + this.currentPage )
                 .then(function(d){
@@ -76,12 +77,15 @@
             },
 
             selectShare(share) {
+                // use the router to go to a specific Share
                 this.$router.push({ name: 'show', params: { id: share.id }})
             },
 
             deleteShare(share) {
                 let asd = this;
 
+                // show a confirmation notification before we send the delete request
+                // we set 2 actions cancel and delete
                 this.$toasted.show('Please confirm your intent to delete: ' + share.instrument_name, {
                     icon:'trash',
                     action:[
@@ -94,10 +98,11 @@
                         {
                             text:'Delete!',
                             onClick: function(e, toastObject) {
-                                console.log(share)
                                 toastObject.goAway(0)
+                                // send the delete request 
                                 axios.delete('/api/shares/' + share.id)
                                 .then(function(data){
+                                    // on success we just refresh the data
                                     asd.getData();
                                     asd.$toasted.success(
                                         data.data.message,
@@ -110,6 +115,7 @@
                                 })
                                 .catch(function(error){
                                     toastObject.goAway(0)
+                                    // should an error occur we render a nice notification
                                     asd.$toasted.error(
                                         error.response.data.message,
                                         {

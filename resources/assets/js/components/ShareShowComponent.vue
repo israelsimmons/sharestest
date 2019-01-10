@@ -118,7 +118,6 @@
                 action:'Edit',
                 tagSelected:[],
                 tags:[],
-                tegs:[{text:'lo que sea'}],
                 tag:'',
                 autocompleteItems:[]
             }
@@ -174,20 +173,27 @@
             },
             saveShare(event) {
                 event.preventDefault();
-
+                // set a variable to be able to make calls to the component from inside
+                // of the anonymous functions below defined
                 let asd = this
                 let updated = false;
 
                 let obj = { share:asd.share}
 
+                // taking advantage of laravel's router we can send a POST request
+                // with the parameter _method to send a PUT request
                 if (this.$route.params.id !== 'new') {
                     obj._method = 'PUT'
                 }
 
+                // this ajax call will save the Share data when creating a new record or updating it
                 axios.post('/api/shares/' + asd.share.id , obj)
                 .then(function(d){
-
+                    // On success it will render a notification for new or updated record
                     if (asd.share.id !== d.data.share.id) {
+                        // if it's a new record that have been saved it will navigate to the 
+                        // new route givin the id as a parameter so the next time is saved it will update the data
+                        // and not make a new record
                         asd.$router.push({name:'show', params: {id:d.data.share.id}});
                         asd.$toasted.success('Share successfuly registered', {duration:3000, icon:'check'})
 
@@ -196,14 +202,17 @@
                         asd.$toasted.success('Share successfuly modified', {duration:3000, icon:'check'})
                     }
 
+                    // we refresh the data from the response
                     asd.share = d.data.share
 
+                    // set a new object to send the tags data
                     let objData = {}
-                    
                     objData.tags = asd.tags.map(function(a){
                         return {id:a.value, description:a.text}
                     })
 
+                    // even if we are updating the tags we send a post request
+                    // because we are syncing the tags we just let laravel do the job
                     axios.post('/api/shares/' + asd.share.id + '/tags', objData)
                     .then(function(d){
                         // asd.$toasted.success('Tags updated propperly', {duration:3000, icon:'check'})
@@ -212,6 +221,7 @@
                     // we can go back if we want
                     // asd.$router.go(-1)
                 }).catch(function(error){
+                    // Give notifications when errors occur
                     asd.$toasted.error(error.response.data.message, {duration:5000, icon:'atom'});
                     for (let err in error.response.data.errors) {
                         error.response.data.errors[err].map(function(message){

@@ -31,9 +31,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
+
+// added this part so we can take the JWT and send it with every axios request
 let jwt_token = document.head.querySelector('meta[name="jwt-token"]');
 
 if (token) {
+    // I'm sending the token via query string for simplicity purposes
+    // I aware that this can be sent via headers but that will make it a little
+    // difficult to configure, I'm just trying to avoid that trouble
     window.axios.defaults.params = {}
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
     window.axios.defaults.params['token'] = jwt_token.content

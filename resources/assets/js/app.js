@@ -15,9 +15,6 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('share-list', require('./components/ShareListComponent.vue'));
-// Vue.component('share-show', require('./components/ShareShowComponent.vue'));
-
 import App from './components/ExampleComponent.vue'
 import ShareList from './components/ShareListComponent.vue'
 import ShareShow from './components/ShareShowComponent.vue'
@@ -32,9 +29,7 @@ window.Vue.use(VueRouter)
 window.Vue.use(BootstrapVue)
 window.Vue.use(Toasted, {iconPack:'fontawesome'})
 
-// you can also pass options, check options reference below
-// Vue.use(Toasted, Options)
-
+// Setup of the SPA with Vuejs "the right way"
 const router = new VueRouter({
     mode: 'history',
     routes: [

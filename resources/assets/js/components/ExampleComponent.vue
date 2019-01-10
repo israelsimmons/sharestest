@@ -6,5 +6,6 @@
 </template>
 
 <script>
+    // this is the container for the vue-router
     export default {}
 </script>
